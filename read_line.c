@@ -3,11 +3,12 @@
 /* fonction getline
 ** permet de recuperer les entrees utilisateur
 */
-int main ()
+int main (int ac, char **av)
 {
 char *str = NULL;
 size_t size = 0;
 ssize_t line;
+(void)ac;
 
 /* boucle infinie*/
 while (1)
