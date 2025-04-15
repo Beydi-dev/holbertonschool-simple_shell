@@ -1,23 +1,26 @@
-#include <stdio.h>
-#include <unistd.h>
-#include <stdlib.h>
+#include "main.h"
 
+/* fonction getline
+** permet de recuperer les entrees utilisateur
+*/
 int main ()
 {
 char *str = NULL;
 size_t size = 0;
-char line;
+ssize_t line;
 
-printf("$ ");
-
-line = getline(&str, &size, stdin);
-
-if (line == -1)
+/* boucle infinie*/
+while (1)
 {
-	free(str);
-	return (-1);
+	printf("$ ");
+	line = getline(&str, &size, stdin);
+	
+	if (line == -1)
+	{
+		free (str);
+		return (-1);
+	}
+	printf("%s", str);
 }
-printf("%s", str);
-free (str);
 return (0);
 }

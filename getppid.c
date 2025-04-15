@@ -1,8 +1,8 @@
-#include <stdio.h>
-#include <unistd.h>
+#include "main.h"
 
 /**
  * main - ppid
+ * affiche le parent process id
  *
  * Return: Always 0.
  */
