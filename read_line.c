@@ -1,67 +1,60 @@
 #include "main.h"
 
-/* fonction getline
-** permet de recuperer les entrees utilisateur
-*/
-int main (int ac, char **av)
+int main(void)
 {
-char *str = NULL;
-size_t size = 0;
-ssize_t line;
-(void)ac;
-//const char *delim = " \n";
-char *token;
-int count = 0;
-int i = 0;
-char *str_save;
+	char *line = NULL, *line_copy = NULL, *token;
+	size_t len = 0;
+	ssize_t nread;
+	char **av;
+	int count = 0, i = 0;
 
-/* boucle infinie*/
-while (1)
-{
-	printf("$ ");
-	line = getline(&str, &size, stdin);
-	
-	if (line == -1)
+	while (1)
 	{
-		free (str);
-		return (-1);
-	}
-	printf("%s", str);
+		printf("$ ");
+		nread = getline(&line, &len, stdin);
+		if (nread == -1)
+			break;
 
-	count = 0;
-	i = 0;
-/*on travaille sur une copie de str car strtok modifie la chaîne*/
-/*on compte le nombre de caracteres dans str pour le malloc dans av*/
-	str_save = strdup(str);
-	token = strtok(str_save, " \n");
-	while (token != NULL)
-	{
-		count++;
-		token = strtok(NULL, " \n");
-	}
-/*allocation dans av maintenant qu'on connait count, +1 pour NULL byte*/
-	av = malloc(sizeof(char *) * (count + 1));
+		line_copy = strdup(line);
+		if (!line_copy)
+			break;
 
-	if (av == NULL)
-	{
-		return (-1);
-	}
-	token = strtok(str_save, " \n");
+		/*compter les tokens*/
+		token = strtok(line, " \n");
+		while (token)
+		{
+			count++;
+			token = strtok(NULL, " \n");
+		}
 
-	while (token != NULL)
-	{
-		av[i] = strdup(token);
-		i++;
-		token = strtok(NULL, " \n");
+		/*allouer av*/
+		av = malloc(sizeof(char *) * (count + 1));
+		if (!av)
+		{
+			free(line_copy);
+			break;
+		}
+
+		/*remplir av*/
+		token = strtok(line_copy, " \n");
+		while (token)
+		{
+			av[i] = strdup(token);
+			i++;
+			token = strtok(NULL, " \n");
+		}
+		av[i] = NULL;
+
+		/*Test*/
+		for (i = 0; av[i]; i++)
+			printf("-> %s\n", av[i]);
+
+		/*free*/
+		for (i = 0; av[i]; i++)
+			free(av[i]);
+		free(av);
+		free(line_copy);
 	}
-	av[i] = NULL;
-	for (i = 0; av[i] != NULL; i++)
-	{
-		free(av[i]);
-	}
-	free(av);
-	free(str_save);
-}
-free(str);
-return (0);
+	free(line);
+	return (0);
 }
