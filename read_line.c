@@ -5,7 +5,7 @@ int main(void)
 	char *line = NULL, *line_copy = NULL, *token;
 	size_t len = 0;
 	ssize_t nread;
-	char **av;
+	char **argv;
 	int count = 0, i = 0;
 
 	while (1)
@@ -27,32 +27,32 @@ int main(void)
 			token = strtok(NULL, " \n");
 		}
 
-		/*allouer av*/
-		av = malloc(sizeof(char *) * (count + 1));
-		if (!av)
+		/*allouer argv*/
+		argv = malloc(sizeof(char *) * (count + 1));
+		if (!argv)
 		{
 			free(line_copy);
 			break;
 		}
 
-		/*remplir av*/
+		/*remplir argv*/
 		token = strtok(line_copy, " \n");
 		while (token)
 		{
-			av[i] = strdup(token);
+			argv[i] = strdup(token);
 			i++;
 			token = strtok(NULL, " \n");
 		}
-		av[i] = NULL;
+		argv[i] = NULL;
 
 		/*Test*/
-		for (i = 0; av[i]; i++)
-			printf("-> %s\n", av[i]);
+		for (i = 0; argv[i]; i++)
+			printf("-> %s\n", argv[i]);
 
 		/*free*/
-		for (i = 0; av[i]; i++)
-			free(av[i]);
-		free(av);
+		for (i = 0; argv[i]; i++)
+			free(argv[i]);
+		free(argv);
 		free(line_copy);
 	}
 	free(line);
