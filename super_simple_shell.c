@@ -1,19 +1,46 @@
 #include "main.h"
 
-
-int super_simple_shell(char **envp)
+/**
+ * main - Entry point of the super simple shell
+ *
+ * Return: Always 0 on success
+ */
+int main(void)
 {
-	char *line = NULL, *line_copy = NULL, *token;
-	int count, i;
-	char **line;
-	size_t *len;
+	char *line = NULL;
+	size_t len = 0;
+	char **argv = NULL;
+	pid_t pid;
+	int status;
 
 	while (1)
 	{
-		count = 0, i = 0;
-
-		read_line(&line, &len);
 		if (read_line(&line, &len) == -1)
+		{
+			free(line);
 			break;
+		}
+
+		argv = tokenize_line(line);
+		if (!argv || !argv[0])
+		{
+			free_argv(argv);
+			continue;
+		}
+
+		pid = fork();
+		if (pid == 0)
+		{
+			if (execve(argv[0], argv, environ) == -1)
+			{
+				perror(argv[0]);
+				exit(EXIT_FAILURE);
+			}
+		}
+		else
+			wait(&status);
+
+		free_argv(argv);
 	}
-} 
+	return (0);
+}

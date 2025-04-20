@@ -1,13 +1,21 @@
 #include "main.h"
 
+/**
+ * tokenize_line - Splits a line into an array of words (tokens).
+ * @line: Input string to tokenize.
+ *
+ * Return: Array of tokens (strings), or NULL on failure.
+ */
 char **tokenize_line(char *line)
 {
-	char *line_copy = NULL, *token;
-
+	char *line_copy, *token;
 	char **argv;
 	int count = 0, i = 0;
-	
-	/*compter les tokens*/
+
+	line_copy = strdup(line);
+	if (!line_copy)
+		return (NULL);
+
 	token = strtok(line, " \n");
 	while (token)
 	{
@@ -15,26 +23,20 @@ char **tokenize_line(char *line)
 		token = strtok(NULL, " \n");
 	}
 
-	/*allouer argv*/
 	argv = malloc(sizeof(char *) * (count + 1));
 	if (!argv)
 	{
 		free(line_copy);
-		return;
+		return (NULL);
 	}
 
-	/*remplir argv*/
 	token = strtok(line_copy, " \n");
 	while (token)
 	{
-		argv[i] = strdup(token);
-		i++;
+		argv[i++] = strdup(token);
 		token = strtok(NULL, " \n");
 	}
 	argv[i] = NULL;
+	free(line_copy);
+	return (argv);
 }
-/* Test
-	
-	for (i = 0; argv[i]; i++)
-		printf("-> %s\n", argv[i]);
-*/
