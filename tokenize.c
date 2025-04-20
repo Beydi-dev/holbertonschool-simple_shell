@@ -32,15 +32,9 @@ char **tokenize_line(char *line)
 		token = strtok(NULL, " \n");
 	}
 	argv[i] = NULL;
-
-	/*Test*/
+}
+/* Test
+	
 	for (i = 0; argv[i]; i++)
 		printf("-> %s\n", argv[i]);
-
-	/*free*/
-	for (i = 0; argv[i]; i++)
-		free(argv[i]);
-	free(argv);
-	free(line_copy);
-	free(line);
-}
+*/
