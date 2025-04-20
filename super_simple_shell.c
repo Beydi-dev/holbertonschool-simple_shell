@@ -1,94 +1,46 @@
 #include "main.h"
 
-int main(int ac, char **av, char **envp)
+/**
+ * main - Entry point of the super simple shell
+ *
+ * Return: Always 0 on success
+ */
+int main(void)
 {
-	char *line = NULL, *line_copy = NULL, *token;
+	char *line = NULL;
 	size_t len = 0;
-	ssize_t nread;
-	char **argv;
-	int count, i;
-	/*for execve variables*/
-	(void) ac;
-	(void) av;
-	pid_t pid = 0;
+	char **argv = NULL;
+	pid_t pid;
 	int status;
-	//char *args[] = {argv[0], NULL, NULL};
 
 	while (1)
 	{
-		count = 0, i = 0;
-		printf("$ ");
-		nread = getline(&line, &len, stdin);
-		if (nread == -1)
-			break;
-
-		line_copy = strdup(line);
-		if (!line_copy)
-			break;
-
-		/*compter les tokens*/
-		token = strtok(line, " \n");
-		while (token)
+		if (read_line(&line, &len) == -1)
 		{
-			count++;
-			token = strtok(NULL, " \n");
-		}
-
-		/*allouer argv*/
-		argv = malloc(sizeof(char *) * (count + 1));
-		if (!argv)
-		{
-			free(line_copy);
-			break;
-		}
-
-		/*remplir argv*/
-		token = strtok(line_copy, " \n");
-		while (token)
-		{
-			argv[i] = strdup(token);
-			i++;
-			token = strtok(NULL, " \n");
-		}
-		argv[i] = NULL;
-
-		if (argv[0] && strcmp(argv[0], "exit") == 0)
-		{
-			for (i = 0; argv[i]; i++)
-			free(argv[i]);
-			free(argv);
-			free(line_copy);
 			free(line);
-			exit(0);
-		}
-/*fork et execve*/
-		pid = fork();
-		if (pid == -1)
-		{
 			break;
 		}
-		else if (pid == 0)
+
+		argv = tokenize_line(line);
+		if (!argv || !argv[0])
 		{
-			if (execve( argv[0],argv, envp) == -1)
+			free_argv(argv);
+			continue;
+		}
+
+		pid = fork();
+		if (pid == 0)
+		{
+			if (execve(argv[0], argv, environ) == -1)
 			{
-				break;
+				perror(argv[0]);
+				exit(EXIT_FAILURE);
 			}
 		}
 		else
-		wait (&status);
-		
+			wait(&status);
 
-		/*Test
-		for (i = 0; argv[i]; i++)
-			printf("-> %s\n", argv[i]);
-		*/
-
-		/*free*/
-		for (i = 0; argv[i]; i++)
-			free(argv[i]);
-		free(argv);
-		free(line_copy);
+		free_argv(argv);
 	}
-	free(line);
 	return (0);
 }
