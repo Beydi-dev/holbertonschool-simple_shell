@@ -8,13 +8,14 @@
  */
 int main(int ac, char **av)
 {
-	(void)ac;
+
 	char *line = NULL;
 	size_t len = 0;
 	char **argv = NULL;
 	pid_t pid;
 	int status, line_number = 1;
 	char *shell_name = av[0];
+	(void)ac;
 
 	while (1)
 	{
