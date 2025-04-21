@@ -12,5 +12,6 @@ char *_getenv(const char *name);
 char **tokenize_line(char *line);
 ssize_t read_line(char **line, size_t *len);
 void free_argv(char **argv);
+void handle_exit(char **argv, char *line_copy, char *line);
 extern char **environ;
 #endif
