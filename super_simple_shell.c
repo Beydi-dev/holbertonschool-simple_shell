@@ -2,19 +2,23 @@
 
 /**
  * main - Entry point of the super simple shell
- *
+ * @ac : Argument Count
+ * @av : Argument Vector
  * Return: Always 0 on success
  */
-int main(void)
+int main(int ac, char **av)
 {
+	(void)ac;
 	char *line = NULL;
 	size_t len = 0;
 	char **argv = NULL;
 	pid_t pid;
-	int status;
+	int status, line_number;
+	char *shell_name = av[0];
 
 	while (1)
 	{
+		line_number++;
 		if (read_line(&line, &len) == -1)
 		{
 			free(line);
@@ -31,10 +35,10 @@ int main(void)
 		pid = fork();
 		if (pid == 0)
 		{
-			if (execve(argv[0], argv, environ) == -1)
+			if (execve(av[0], argv, environ) == -1)
 			{
-				perror(argv[0]);
-				exit(EXIT_FAILURE);
+				fprintf(stderr, "%s: %d: %s: not found\n", shell_name, line_number, av[0]);
+				exit(EXIT_FAILURE);/*exit(127);*/
 			}
 		}
 		else
@@ -42,5 +46,6 @@ int main(void)
 
 		free_argv(argv);
 	}
+	free(line);
 	return (0);
 }

@@ -33,7 +33,8 @@ char **tokenize_line(char *line)
 	token = strtok(line_copy, " \n");
 	while (token)
 	{
-		argv[i++] = strdup(token);
+		argv[i] = strdup(token);
+		i++;
 		token = strtok(NULL, " \n");
 	}
 	argv[i] = NULL;
