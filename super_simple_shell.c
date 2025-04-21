@@ -5,13 +5,16 @@
  *
  * Return: Always 0 on success
  */
-int main(void)
+int main(int ac, char **av)
 {
 	char *line = NULL;
 	size_t len = 0;
 	char **argv = NULL;
 	pid_t pid;
 	int status;
+	int line_number = 0;
+	char *shell_name = av[0];
+	(void)ac;
 
 	while (1)
 	{
@@ -33,8 +36,8 @@ int main(void)
 		{
 			if (execve(argv[0], argv, environ) == -1)
 			{
-				perror(argv[0]);
-				exit(EXIT_FAILURE);
+				fprintf(stderr, "%s: %d: %s: not found\n", shell_name, line_number, argv[0]);
+				exit(127);
 			}
 		}
 		else
