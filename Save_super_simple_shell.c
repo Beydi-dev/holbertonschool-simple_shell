@@ -7,7 +7,7 @@
  * @envp: Environment variables
  * Return: 0 on success
  */
-int main(int ac, char **av, char **envp)
+/*int main(int ac, char **av, char **envp)
 {
 	char *line = NULL, **argv;
 	size_t len = 0;
@@ -44,3 +44,4 @@ int main(int ac, char **av, char **envp)
 	free(line);
 	return (0);
 }
+*/
