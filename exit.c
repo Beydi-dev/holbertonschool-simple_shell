@@ -14,7 +14,6 @@ void handle_exit(char **argv, char *line)
 	for (i = 0; argv[i]; i++)
 	free(argv[i]);
 	free(argv);
-	/*free(line_copy);*/
 	free(line);
 	exit(0);
 }
