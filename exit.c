@@ -16,5 +16,5 @@ void handle_exit(char **argv, char *line)
 
 	free_argv(argv);
 	free(line);
-	exit(0);
+	exit(status);
 }
