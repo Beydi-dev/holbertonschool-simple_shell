@@ -1,12 +1,12 @@
 #include "main.h"
-
 void handle_exit(char **argv, char *line)
 {
-	int i;
+	int status = 0;
 
-	for (i = 0; argv[i]; i++)
-	free(argv[i]);
-	free(argv);
+	if (argv[1])
+		status = atoi(argv[1]);
+
+	free_argv(argv);
 	free(line);
-	exit(0);
+	exit(status);
 }
