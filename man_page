@@ -1,85 +1,87 @@
-.TH SIMPLE_SHELL 1 "Avril 2025" "Version 1.0" "Manuel utilisateur"
+.TH SIMPLE_SHELL 1 "April 2025" "Version 1.0" "User Manual"
 
-.SH NOM
-simple_shell - Mini shell en C permettant l'exécution de commandes Unix
+.SH NAME
+simple_shell - Mini shell in C for executing Unix commands
 
 .SH SYNOPSIS
 .B ./simple_shell
 
 .SH DESCRIPTION
-Le programme
+The
 .B simple_shell
-est une implémentation simple d’un shell Unix. Il lit les lignes de commande depuis l'entrée standard, les découpe en arguments, et exécute les commandes via un processus enfant.
+program is a basic implementation of a Unix shell. It reads command lines from standard input, splits them into arguments, and executes the commands using a child process.
 
-.SH FONCTIONNALITÉS
+.SH FEATURES
 .TP
-Lecture d'une ligne de commande depuis l'entrée standard.
+Reads a command line from standard input.
 .TP
-Découpage (tokenisation) de la ligne en arguments.
+Tokenizes the line into usable arguments.
 .TP
-Exécution des commandes grâce à
+Executes commands using
 .B fork()
-et
+and
 .B execve().
 .TP
-Affichage des variables d'environnement avec la commande
-.B env.
+Displays environment variables with the
+.B env
+command.
 .TP
-Arrêt du shell avec
+Exits the shell using
 .B exit [code].
 
-.SH COMMANDES INTERNES
+.SH BUILT-IN COMMANDS
 .TP
 .B exit [status]
-Termine le shell avec le code de sortie spécifié. Par défaut, le code est 0.
+Exits the shell with the specified exit code. Defaults to 0 if no code is provided.
 .TP
 .B env
-Affiche toutes les variables d’environnement disponibles.
+Displays all available environment variables.
 
-.SH FICHIERS DU PROJET
-Le projet est composé des fichiers suivants :
+.SH PROJECT FILES
+The project consists of the following files:
 .TP
 .B main.c
-Contient la boucle principale du shell.
+Contains the main shell loop.
 .TP
 .B read_line.c
-Lit la ligne de commande saisie par l'utilisateur.
+Reads the command line input from the user.
 .TP
 .B tokenize_line.c
-Découpe la ligne en arguments utilisables.
+Splits the command line into arguments.
 .TP
 .B execute_command.c
-Gère l'exécution des commandes via
+Handles command execution via
 .B execve().
 .TP
 .B handle_exit.c
-Gère la commande interne
-.B exit.
+Handles the internal
+.B exit
+command.
 .TP
 .B free_argv.c
-Libère la mémoire allouée pour les tableaux d'arguments.
+Frees the memory allocated for argument arrays.
 .TP
 .B main.h
-Contient les prototypes et les inclusions nécessaires.
+Contains necessary prototypes and includes.
 
-.SH VALEUR DE RETOUR
-Le shell retourne :
+.SH RETURN VALUE
+The shell returns:
 .TP
-0 si la session s'est terminée normalement.
+0 if the session ended normally.
 .TP
-127 si une commande est introuvable ou non exécutable.
+127 if a command was not found or is not executable.
 
-.SH EXEMPLE
+.SH EXAMPLE
 .EX
 $ ls -l
 $ env
 $ exit 98
 .EE
 
-.SH AUTEURS
+.SH AUTHORS
 Ilmi Veliu, Beydi Coulibaly
 
-.SH VOIR AUSSI
+.SH SEE ALSO
 .BR sh (1),
 .BR bash (1),
 .BR execve (2),
