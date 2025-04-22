@@ -1,4 +1,6 @@
 #include "main.h"
+#include <string.h>
+#include <stdio.h>
 
 /**
  * main - Entry point of the super simple shell
@@ -32,12 +34,30 @@ int main(int ac, char **av, char **envp)
 			line_number++;
 			continue;
 		}
+
+		/* ======= GESTION DE exit ======= */
 		if (strcmp(argv[0], "exit") == 0)
 			handle_exit(argv, line);
 
+		/* ======= GESTION DE env ======= */
+		if (strcmp(argv[0], "env") == 0)
+		{
+			int i = 0;
+
+			while (envp[i])
+			{
+				printf("%s\n", envp[i]);
+				i++;
+			}
+
+			free_argv(argv);
+			line_number++;
+			continue;
+		}
+
 		pid = fork();
 		if (pid == 0)
-		execute_command(av[0], argv, line_number, envp);
+			execute_command(av[0], argv, line_number, envp);
 		else
 			wait(&status);
 
