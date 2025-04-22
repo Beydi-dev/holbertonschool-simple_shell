@@ -1,7 +1,3 @@
-from pathlib import Path
-
-# Contenu du README dans le bon format
-readme_content = """
 # 📌 Projet `simple_shell`
 
 Nous sommes heureux aujourd'hui de vous présenter notre second projet collaboratif en langage C !
