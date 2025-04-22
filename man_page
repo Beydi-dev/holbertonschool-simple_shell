@@ -1,0 +1,89 @@
+.TH SIMPLE_SHELL 1 "Avril 2025" "Version 1.0" "Manuel utilisateur"
+
+.SH NOM
+simple_shell - Mini shell en C permettant l'exécution de commandes Unix
+
+.SH SYNOPSIS
+.B ./simple_shell
+
+.SH DESCRIPTION
+Le programme
+.B simple_shell
+est une implémentation simple d’un shell Unix. Il lit les lignes de commande depuis l'entrée standard, les découpe en arguments, et exécute les commandes via un processus enfant.
+
+.SH FONCTIONNALITÉS
+.TP
+Lecture d'une ligne de commande depuis l'entrée standard.
+.TP
+Découpage (tokenisation) de la ligne en arguments.
+.TP
+Exécution des commandes grâce à
+.B fork()
+et
+.B execve().
+.TP
+Affichage des variables d'environnement avec la commande
+.B env.
+.TP
+Arrêt du shell avec
+.B exit [code].
+
+.SH COMMANDES INTERNES
+.TP
+.B exit [status]
+Termine le shell avec le code de sortie spécifié. Par défaut, le code est 0.
+.TP
+.B env
+Affiche toutes les variables d’environnement disponibles.
+
+.SH FICHIERS DU PROJET
+Le projet est composé des fichiers suivants :
+.TP
+.B main.c
+Contient la boucle principale du shell.
+.TP
+.B read_line.c
+Lit la ligne de commande saisie par l'utilisateur.
+.TP
+.B tokenize_line.c
+Découpe la ligne en arguments utilisables.
+.TP
+.B execute_command.c
+Gère l'exécution des commandes via
+.B execve().
+.TP
+.B handle_exit.c
+Gère la commande interne
+.B exit.
+.TP
+.B free_argv.c
+Libère la mémoire allouée pour les tableaux d'arguments.
+.TP
+.B main.h
+Contient les prototypes et les inclusions nécessaires.
+
+.SH VALEUR DE RETOUR
+Le shell retourne :
+.TP
+0 si la session s'est terminée normalement.
+.TP
+127 si une commande est introuvable ou non exécutable.
+
+.SH EXEMPLE
+.EX
+$ ls -l
+$ env
+$ exit 98
+.EE
+
+.SH AUTEURS
+Ilmi Veliu, Beydi Coulibaly
+
+.SH VOIR AUSSI
+.BR sh (1),
+.BR bash (1),
+.BR execve (2),
+.BR fork (2),
+.BR wait (2),
+.BR strtok (3),
+.BR getline (3)
