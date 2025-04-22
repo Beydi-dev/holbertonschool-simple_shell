@@ -1,12 +1,5 @@
 #include "main.h"
 
-/**
- * handle_exit - Frees memory and exits the program.
- * @argv: Array of arguments to free.
- * @line: Input line to free.
- *
- * Return: Nothing (exits the program).
- */
 void handle_exit(char **argv, char *line)
 {
 	int i;
