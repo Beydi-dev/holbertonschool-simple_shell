@@ -13,6 +13,6 @@ char **tokenize_line(char *line);
 ssize_t read_line(char **line, size_t *len);
 void free_argv(char **argv);
 void handle_exit(char **argv, char *line_copy, char *line);
-void execute_command(char **av, char **argv, int line_number, char **envp);
+void execute_command(char *av, char **argv, int line_number, char **envp);
 extern char **environ;
 #endif
