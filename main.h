@@ -7,7 +7,7 @@
 #include <string.h>
 #include <sys/types.h>
 #include <sys/wait.h>
-#include <sys/stat.h> /*pour utiliser struc stat*/
+#include <sys/stat.h> /*header for the use of struc stat*/
 char *_getenv(const char *name);
 char **tokenize_line(char *line);
 ssize_t read_line(char **line, size_t *len);
