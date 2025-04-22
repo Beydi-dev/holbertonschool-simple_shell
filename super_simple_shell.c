@@ -32,6 +32,9 @@ int main(int ac, char **av, char **envp)
 			line_number++;
 			continue;
 		}
+		if (strcmp(argv[0], "exit") == 0)
+			handle_exit(argv, line);
+
 		pid = fork();
 		if (pid == 0)
 		execute_command(av[0], argv, line_number, envp);
