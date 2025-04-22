@@ -34,7 +34,13 @@ int main(int ac, char **av, char **envp)
 		}
 		pid = fork();
 		if (pid == 0)
-		execute_command(av[0], argv, line_number, envp);
+		{
+			if (execve(argv[0], argv, envp) == -1)
+			{
+				fprintf(stderr, "%s: %d: %s: not found\n", av[0], line_number, argv[0]);
+				exit(127);
+			}
+		}
 		else
 			wait(&status);
 
