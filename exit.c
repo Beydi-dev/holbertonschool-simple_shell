@@ -1,11 +1,11 @@
 #include "main.h"
 
 /**
- * handle_exit - Libère la mémoire et quitte le programme.
- * @argv: Commande et arguments.
- * @line: Ligne lue à libérer.
+ * handle_exit - free the memory and exit the progra
+ * @argv: Command and argument.
+ * @line: Line to free
  *
- * Return: Rien, quitte avec 0.
+ * Return: nothing, exit 0.
  */
 void handle_exit(char **argv, char *line)
 {

@@ -16,6 +16,7 @@ char **tokenize_line(char *line)
 	if (!line_copy)
 		return (NULL);
 
+	/* 1st strtok to calculate length of line */
 	token = strtok(line, " \n");
 	while (token)
 	{
@@ -29,7 +30,7 @@ char **tokenize_line(char *line)
 		free(line_copy);
 		return (NULL);
 	}
-
+	/* 2nd strtok to stock the tokenized string in an array */
 	token = strtok(line_copy, " \n");
 	while (token)
 	{

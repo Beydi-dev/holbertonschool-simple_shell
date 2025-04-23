@@ -17,7 +17,7 @@ void free_argv(char **argv);
 void handle_exit(char **argv, char *line);
 void execute_command(char *av, char **argv, int line_number, char **envp);
 void handle_path(char **argv, char **envp, int line_number);
-void ispathname(char **argv, char **envp);
+void ispathname(char **argv, char **envp, int line_number);
 void handle_env(char **argv, char **envp);
 
 extern char **environ;

@@ -12,7 +12,6 @@ int main(int ac, char **av, char **envp)
 	char *line = NULL, **argv;
 	size_t len = 0;
 	ssize_t nread;
-	pid_t pid;
 	int status, line_number = 1;
 	(void)ac;
 	(void)av;
@@ -45,22 +44,16 @@ int main(int ac, char **av, char **envp)
 			line_number++;
 			continue;
 		}
-		pid = fork();
-		if (pid == 0)
+		/* if a command is a pathname*/
+		if (strchr(argv[0], '/'))
 		{
-			/* if a command is a pathname*/
-			if (strchr(argv[0], '/'))
-			{
-				ispathname(argv, envp);
-			}
-			else
-			{
-				handle_path(argv, envp, line_number);
-				exit(127); /* if nothing were found in the path */
-			}
+			ispathname(argv, envp, line_number);
 		}
 		else
-			wait(&status);
+		{
+			handle_path(argv, envp, line_number);
+		}
+		wait(&status);
 
 		free_argv(argv);
 		line_number++;

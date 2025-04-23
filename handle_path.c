@@ -42,7 +42,7 @@ void handle_path(char **argv, char **envp, int line_number)
 			if (pid == 0)
 			{
 				execve(full_path, argv, envp);
-				perror("execve");
+				perror("execve"); /* you have to call execute_command function*/
 				exit(1);
 			}
 			else if (pid > 0)
