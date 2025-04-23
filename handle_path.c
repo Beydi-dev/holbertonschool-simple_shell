@@ -2,13 +2,14 @@
 
 /**
  * handle_path - Finds and executes a command from the PATH.
- * @argv: Array of command and arguments.
+ * @args: Array of command and arguments.
+ * @argv: Argument vector
  * @envp: Environment variables.
  * @line_number: Line number for error messages.
  *
  * Return: Nothing.
  */
-void handle_path(char **argv, char **envp, int line_number)
+void handle_path(char *argv, char **args, char **envp, int line_number)
 {
 	char *original_path = _getenv("PATH");
 	char *path = strdup(original_path);
@@ -22,7 +23,7 @@ void handle_path(char **argv, char **envp, int line_number)
 	token = strtok(path, ":");
 	while (token)
 	{
-		total_len = strlen(token) + strlen(argv[0]) + 2;
+		total_len = strlen(token) + strlen(args[0]) + 2;
 		full_path = malloc(sizeof(char) * total_len);
 
 		if (!full_path)
@@ -32,18 +33,16 @@ void handle_path(char **argv, char **envp, int line_number)
 		}
 		strcpy(full_path, token);
 		strcat(full_path, "/");
-		strcat(full_path, argv[0]);
+		strcat(full_path, args[0]);
 
-		/* if the path is valid*/
-		if (stat(full_path, &buf) == 0)
+		if (stat(full_path, &buf) == 0)    /* if the path is valid*/
 		{
 			pid = fork();
 
 			if (pid == 0)
 			{
-				execve(full_path, argv, envp);
-				perror("execve"); /* you have to call execute_command function*/
-				exit(1);
+				execve(full_path, args, envp);
+				execute_command(argv, args, line_number, envp);
 			}
 			else if (pid > 0)
 			{
@@ -58,6 +57,12 @@ void handle_path(char **argv, char **envp, int line_number)
 		token = strtok(NULL, ":");
 	}
 	if (!found)
-		execute_command(argv[0], argv, line_number, envp);
+	{
+		pid = fork();
+		if (pid == 0)
+			execute_command(argv, args, line_number, envp);
+		else if (pid > 0)
+			wait(&status);
+	}
 	free(path);
 }
