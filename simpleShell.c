@@ -1,6 +1,4 @@
 #include "main.h"
-#include <string.h>
-#include <stdio.h>
 
 /**
  * main - Entry point of the super simple shell
@@ -17,6 +15,7 @@ int main(int ac, char **av, char **envp)
 	pid_t pid;
 	int status, line_number = 1;
 	(void)ac;
+	(void)av;
 
 	while (1)
 	{
@@ -35,11 +34,11 @@ int main(int ac, char **av, char **envp)
 			continue;
 		}
 
-		/* ======= GESTION DE exit ======= */
+		/* handling exit */
 		if (strcmp(argv[0], "exit") == 0)
 			handle_exit(argv, line);
 
-		/* ======= GESTION DE env ======= */
+		/*handling env*/
 		if (strcmp(argv[0], "env") == 0)
 		{
 			int i = 0;
@@ -57,7 +56,15 @@ int main(int ac, char **av, char **envp)
 
 		pid = fork();
 		if (pid == 0)
-			execute_command(av[0], argv, line_number, envp);
+		{
+			if (strchr(argv[0], '/'))
+				ispathname(argv, envp);
+			else
+			{
+				handle_path(argv, envp, line_number);
+				exit(127); /* if nothing were found in the path */
+			}
+		}
 		else
 			wait(&status);
 
