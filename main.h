@@ -19,6 +19,7 @@ void execute_command(char *av, char **argv, int line_number, char **envp);
 void handle_path(char *argv, char **args, char **envp, int line_number);
 void ispathname(char **argv, char **envp, int line_number);
 void handle_env(char **argv, char **envp);
-
+void launch_process(char *full_path, char *argv, char **args,
+char **envp, int line_number, int free_after);
 extern char **environ;
 #endif

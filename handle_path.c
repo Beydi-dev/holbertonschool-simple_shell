@@ -14,9 +14,8 @@ void handle_path(char *argv, char **args, char **envp, int line_number)
 	char *original_path = _getenv("PATH");
 	char *path = strdup(original_path);
 	char *token;
-	int status, found = 0;
+	int found = 0;
 	size_t total_len;
-	pid_t pid;
 	char *full_path;
 	struct stat buf;
 
@@ -37,32 +36,16 @@ void handle_path(char *argv, char **args, char **envp, int line_number)
 
 		if (stat(full_path, &buf) == 0)    /* if the path is valid*/
 		{
-			pid = fork();
-
-			if (pid == 0)
-			{
-				execve(full_path, args, envp);
-				execute_command(argv, args, line_number, envp);
-			}
-			else if (pid > 0)
-			{
-				wait(&status);
-				found = 1;
-				free(full_path);
-				free(path);
-				return;
-			}
+			launch_process(full_path, argv, args, envp, line_number, 1);
+			found = 1;
+			free(path);
+			return;
 		}
 		free(full_path);
 		token = strtok(NULL, ":");
 	}
 	if (!found)
-	{
-		pid = fork();
-		if (pid == 0)
-			execute_command(argv, args, line_number, envp);
-		else if (pid > 0)
-			wait(&status);
-	}
+		launch_process(args[0], argv, args, envp, line_number, 0);
+
 	free(path);
 }
