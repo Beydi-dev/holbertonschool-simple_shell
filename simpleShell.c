@@ -45,12 +45,13 @@ int main(int ac, char **av, char **envp)
 			line_number++;
 			continue;
 		}
-
-		pid = fork();
 		if (pid == 0)
 		{
 			if (strchr(argv[0], '/'))
+			{
+				pid = fork();
 				ispathname(argv, envp);
+			}
 			else
 			{
 				handle_path(argv, envp, line_number);
