@@ -29,7 +29,7 @@ int main(int ac, char **argv, char **envp)
 			line_number++;
 			continue;
 		}
-		if (strcmp(args[0], "exit") == 0)  /* handling exit */
+		if (strcmp(args[0], "exit") == 0 && args[1] == NULL)  /* handling exit */
 			handle_exit(args, line);
 
 		if (strcmp(args[0], "env") == 0)   /*handling env*/
