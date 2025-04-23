@@ -45,11 +45,12 @@ int main(int ac, char **av, char **envp)
 			line_number++;
 			continue;
 		}
+		pid = fork();
 		if (pid == 0)
 		{
+			/* if a command is a pathname*/
 			if (strchr(argv[0], '/'))
 			{
-				pid = fork();
 				ispathname(argv, envp);
 			}
 			else
