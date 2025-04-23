@@ -1,14 +1,18 @@
-if (strcmp(argv[0], "env") == 0)
-		{
-			int i = 0;
+#include "main.h"
 
-			while (envp[i])
-			{
-				printf("%s\n", envp[i]);
-				i++;
-			}
+/**
+ * handle_env - Affiche les variables d’environnement
+ * @argv: Tableau des arguments (sera libéré ici)
+ * @envp: Variables d’environnement
+ */
+void handle_env(char **argv, char **envp)
+{
+	int i = 0;
 
-			free_argv(argv);
-			line_number++;
-			continue;
-		}
+	while (envp[i])
+	{
+		printf("%s\n", envp[i]);
+		i++;
+	}
+	free_argv(argv);
+}
