@@ -1,9 +1,9 @@
 #include "main.h"
 
 /**
- * handle_env - Affiche les variables d’environnement
- * @argv: Tableau des arguments (sera libéré ici)
- * @envp: Variables d’environnement
+ * handle_env - Dispalys environment variables
+ * @argv: Argument's array (free here)
+ * @envp: Environment variables
  */
 void handle_env(char **argv, char **envp)
 {
