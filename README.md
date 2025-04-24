@@ -19,7 +19,14 @@ Le projet est organisé en plusieurs fichiers :
 | `tokenize_line.c`     | Découpe la ligne de commande en tokens (commandes/arguments). |
 | `execute_command.c`   | Exécute les commandes en utilisant `execve`. |
 | `handle_exit.c`       | Gère la commande interne `exit`. |
-| `free_argv.c`         | Libère la mémoire allouée au tableau d’arguments. |
+| `free_argv.c`         |Libère la mémoire allouée au tableau d’arguments. |
+|'_gentenv.c            |recupère le contenu d une varibale d'environnement. |
+|laucnh_process.c       |exécuter un path name .|
+|simpleShell.c          |fonction principal|
+|env.c
+|exit.c
+|handle_path.c
+|ispathname.c
 
 ---
 
@@ -35,6 +42,8 @@ Notre `simple_shell` prend en charge plusieurs fonctionnalités essentielles :
 - ✅ Affichage d’un message d’erreur si la commande est introuvable.  
 
 ---
+## 📂Flowchart
+![Diagramme de flux](https://github.com/user-attachments/assets/c898cc74-3a24-4330-aad1-b74492c1505c)
 
 ## 🚀 Compilation et Restrictions  
 Le projet doit être compilé avec la commande suivante :  
