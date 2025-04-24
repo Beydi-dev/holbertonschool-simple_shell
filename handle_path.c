@@ -11,8 +11,7 @@
  */
 void handle_path(char *argv, char **args, char **envp, int line_number)
 {
-	char *original_path = _getenv("PATH");
-	char *path = strdup(original_path);
+	char *path = strdup(_getenv("PATH"));
 	char *token;
 	int found = 0;
 	size_t total_len;
